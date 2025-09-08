@@ -1,0 +1,54 @@
+1.Create the photography_booking_system database:
+
+	CREATE DATABASE photography_booking_system;
+
+2.Switch to the photography_booking_system database:
+	
+	USE photography_booking_system;
+
+3.Create the users table:
+
+	CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+4.Create the photography_containers table:
+
+	CREATE TABLE photography_containers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    photo_url VARCHAR(255) NOT NULL
+);
+
+5.Create the bookings table:
+
+	CREATE TABLE bookings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    container_id INT NOT NULL,
+    event_name VARCHAR(100) NOT NULL,
+    event_address VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    booking_date DATE NOT NULL,
+    booking_time TIME NOT NULL,
+    time_period ENUM('AM', 'PM') NOT NULL,
+    payment_status ENUM('pending', 'success', 'failed') NOT NULL DEFAULT 'pending',
+    status ENUM('pending', 'accepted', 'rejected') NOT NULL DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (container_id) REFERENCES photography_containers(id)
+);
+
+5.Create the admins table:
+	
+	CREATE TABLE admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
